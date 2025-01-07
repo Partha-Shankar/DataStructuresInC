@@ -72,6 +72,15 @@ void convertToPostfix(char infix[], char postfix[]) {
 }
 
 int main() {
-    // Placeholder for main functionality
+    char infix[20], postfix[20];
+
+    printf("\nEnter infix expression: ");
+    fgets(infix, sizeof(infix), stdin);
+    infix[strcspn(infix, "\n")] = '\0'; // Remove newline character if present
+
+    convertToPostfix(infix, postfix);
+
+    printf("\nPostfix expression: %s\n", postfix);
+
     return 0;
 }
