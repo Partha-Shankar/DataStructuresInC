@@ -20,12 +20,58 @@ void push(char s) {
 char pop() {
     if (tos == -1) {
         printf("Stack underflow! Stack is empty.\n");
-        return '\0'; 
+        return '\0'; // Sentinel value
     } else {
         return stack[tos--];
     }
 }
 
+// Get precedence of operators
+int precedence(char s) {
+    switch (s) {
+        case '^': return 4;
+        case '*': case '/': case '%': return 3;
+        case '+': case '-': return 2;
+        case '(' : return 1;
+        default: return 0;
+    }
+}
+
+// Function to convert infix to postfix
+void convertToPostfix(char infix[], char postfix[]) {
+    int i, j = 0;
+    char symbol;
+
+    push('#'); // Start with a sentinel
+    for (i = 0; i < strlen(infix); i++) {
+        symbol = infix[i];
+
+        if (isalnum(symbol)) { // Operand
+            postfix[j++] = symbol;
+        } else if (symbol == '(') { // Left parenthesis
+            push(symbol);
+        } else if (symbol == ')') { // Right parenthesis
+            while (stack[tos] != '(') {
+                postfix[j++] = pop();
+            }
+            pop(); // Pop the '('
+        } else { // Operator
+            while (precedence(symbol) <= precedence(stack[tos])) {
+                postfix[j++] = pop();
+            }
+            push(symbol);
+        }
+    }
+
+    // Pop remaining operators
+    while (stack[tos] != '#') {
+        postfix[j++] = pop();
+    }
+
+    postfix[j] = '\0'; // Null-terminate the postfix string
+}
+
 int main() {
+    // Placeholder for main functionality
     return 0;
 }
