@@ -40,8 +40,40 @@ void Read_data(struct STUD s[max]) {
     }
 }
 
+void Displaydata(struct STUD s[], int count) {
+    printf("\nStudent Details (Score > 85):\n");
+    printf("Stud Name\tRoll Num\tPercentage Marks\n");
+    printf("-------------------------------------------------\n");
+
+    for (i = 0; i < count; i++) {
+        printf("%-15s %-10d %.2f\n", s[i].stud_name, s[i].roll_num, s[i].per_marks);
+    }
+}
+
+void calculate(struct STUD s[max]) {
+    struct STUD high_scorers[max];
+    int count = 0;
+
+    for (i = 0; i < n; i++) {
+        if (s[i].per_marks > 85) {
+            high_scorers[count] = s[i]; // Store the high scorer
+            count++;
+        }
+    }
+
+    // Display the details of students who scored more than 85
+    if (count > 0) {
+        Displaydata(high_scorers, count);
+    } else {
+        printf("\nNo students scored more than 85.\n");
+    }
+}
+
 int main() {
     struct STUD s[max];
     Read_data(s);
+    if (n > 0) { // Proceed only if students were entered
+        calculate(s);
+    }
     return 0;
 }
