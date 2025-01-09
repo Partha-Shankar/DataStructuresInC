@@ -37,6 +37,41 @@ void display() {
     }
 }
 
+// Function to check if a number is a palindrome using the stack
+void palin() {
+    int n, temp, rem, flag = 1;
+
+    printf("\nEnter a number to check for palindrome: ");
+    scanf("%d", &n);
+
+    // Copy of the original number
+    temp = n;
+
+    // Push each digit onto the stack
+    while (temp != 0) {
+        rem = temp % 10;
+        push(rem);
+        temp /= 10;
+    }
+
+    // Check if the number is a palindrome
+    temp = n; // Reset temp to the original number
+    while (temp != 0) {
+        rem = temp % 10;
+        if (pop() != rem) {
+            flag = 0;
+            break;
+        }
+        temp /= 10;
+    }
+
+    if (flag) {
+        printf("\n%d is a palindrome.\n", n);
+    } else {
+        printf("\n%d is not a palindrome.\n", n);
+    }
+}
+
 // Main function with menu
 int main() {
     int choice, element;
@@ -46,7 +81,8 @@ int main() {
         printf("\n1. Push an element onto the stack");
         printf("\n2. Pop an element from the stack");
         printf("\n3. Display stack elements");
-        printf("\n4. Exit");
+        printf("\n4. Check if a number is a palindrome");
+        printf("\n5. Exit");
         printf("\nEnter your choice: ");
         scanf("%d", &choice);
 
@@ -66,10 +102,13 @@ int main() {
                 display();
                 break;
             case 4:
+                palin();
+                break;
+            case 5:
                 printf("\nExiting program. Goodbye!\n");
                 exit(0);
             default:
-                printf("\nInvalid choice! Please enter a number between 1 and 4.\n");
+                printf("\nInvalid choice! Please enter a number between 1 and 5.\n");
         }
     }
     return 0;
