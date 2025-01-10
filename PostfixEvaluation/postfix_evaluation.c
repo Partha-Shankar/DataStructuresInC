@@ -40,7 +40,62 @@ int pop(Stack* stack) {
     }
 }
 
+// Evaluate a postfix expression
+int evaluatePostfix(const char* expression) {
+    Stack stack;
+    initializeStack(&stack);
+
+    for (int i = 0; expression[i] != '\0'; i++) {
+        char ch = expression[i];
+
+        // If the character is a digit, push it onto the stack
+        if (isdigit(ch)) {
+            push(&stack, ch - '0');
+        } 
+        // If the character is an operator, pop two operands and apply the operator
+        else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+            if (stack.top < 1) {
+                printf("Error: Not enough operands for operator '%c'.\n", ch);
+                exit(EXIT_FAILURE);
+            }
+            int operand2 = pop(&stack);
+            int operand1 = pop(&stack);
+            int result;
+
+            switch (ch) {
+                case '+': result = operand1 + operand2; break;
+                case '-': result = operand1 - operand2; break;
+                case '*': result = operand1 * operand2; break;
+                case '/':
+                    if (operand2 == 0) {
+                        printf("Error: Division by zero.\n");
+                        exit(EXIT_FAILURE);
+                    }
+                    result = operand1 / operand2;
+                    break;
+                default:
+                    printf("Error: Unsupported operator '%c'.\n", ch);
+                    exit(EXIT_FAILURE);
+            }
+            // Push the result back onto the stack
+            push(&stack, result);
+        } else {
+            printf("Error: Invalid character '%c' in expression.\n", ch);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    // The final result should be the only item left in the stack
+    if (stack.top != 0) {
+        printf("Error: Malformed expression. Too many operands.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    return pop(&stack);
+}
+
 int main() {
-    printf("Initial stack functions implemented.\n");
+    const char* expression = "656+5*2*";
+    printf("Result of postfix expression '%s' is: %d\n", expression, evaluatePostfix(expression));
     return 0;
 }
