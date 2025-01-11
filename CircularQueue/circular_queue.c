@@ -73,5 +73,12 @@ int main() {
         display(queue, f, r);
     }
 
+    // Perform deletions
+    delete(queue, &f, &r);
+    display(queue, f, r);
+
+    delete(queue, &f, &r);
+    display(queue, f, r);
+
     return 0;
 }
