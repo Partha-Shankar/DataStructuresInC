@@ -46,6 +46,57 @@ void insert_end() {
     temp->link = n1;
 }
 
+void delete_front() {
+    if (start == NULL) {
+        printf("\nList is empty.\n");
+        return;
+    }
+    node *temp = start;
+    printf("\nDeleted Student Data: USN: %s, Name: %s, Avg Marks: %.2f\n",
+           temp->usn, temp->name, temp->avg_marks);
+    start = temp->link;
+    free(temp);
+}
+
+void delete_end() {
+    if (start == NULL) {
+        printf("\nList is empty.\n");
+        return;
+    }
+    if (start->link == NULL) {
+        printf("\nDeleted Student Data: USN: %s, Name: %s, Avg Marks: %.2f\n",
+               start->usn, start->name, start->avg_marks);
+        free(start);
+        start = NULL;
+        return;
+    }
+    node *temp = start, *prev = NULL;
+    while (temp->link != NULL) {
+        prev = temp;
+        temp = temp->link;
+    }
+    prev->link = NULL;
+    printf("\nDeleted Student Data: USN: %s, Name: %s, Avg Marks: %.2f\n",
+           temp->usn, temp->name, temp->avg_marks);
+    free(temp);
+}
+
+void display() {
+    if (start == NULL) {
+        printf("\nList is empty.\n");
+        return;
+    }
+    int count = 0;
+    node *temp = start;
+    printf("\nStudent Data in List:\n");
+    while (temp != NULL) {
+        printf("USN: %s, Name: %s, Avg Marks: %.2f\n", temp->usn, temp->name, temp->avg_marks);
+        temp = temp->link;
+        count++;
+    }
+    printf("\nTotal Students: %d\n", count);
+}
+
 int main() {
     int choice, n, i;
     while (1) {
@@ -53,6 +104,9 @@ int main() {
         printf("1: Create N Students\n");
         printf("2: Insert at Front\n");
         printf("3: Insert at End\n");
+        printf("4: Delete at Front\n");
+        printf("5: Delete at End\n");
+        printf("6: Display List\n");
         printf("9: Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -69,6 +123,15 @@ int main() {
             break;
         case 3:
             insert_end();
+            break;
+        case 4:
+            delete_front();
+            break;
+        case 5:
+            delete_end();
+            break;
+        case 6:
+            display();
             break;
         case 9:
             return 0;
