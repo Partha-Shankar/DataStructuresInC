@@ -97,6 +97,26 @@ void display() {
     printf("\nTotal Students: %d\n", count);
 }
 
+void stack_demo() {
+    printf("\nStack Demonstration:\n");
+    printf("Inserting elements into the stack...\n");
+    insert_front();
+    display();
+    printf("\nPopping elements from the stack...\n");
+    delete_front();
+    display();
+}
+
+void queue_demo() {
+    printf("\nQueue Demonstration:\n");
+    printf("Inserting elements into the queue...\n");
+    insert_end();
+    display();
+    printf("\nRemoving elements from the queue...\n");
+    delete_front();
+    display();
+}
+
 int main() {
     int choice, n, i;
     while (1) {
@@ -107,6 +127,8 @@ int main() {
         printf("4: Delete at Front\n");
         printf("5: Delete at End\n");
         printf("6: Display List\n");
+        printf("7: Demonstrate Stack\n");
+        printf("8: Demonstrate Queue\n");
         printf("9: Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -132,6 +154,12 @@ int main() {
             break;
         case 6:
             display();
+            break;
+        case 7:
+            stack_demo();
+            break;
+        case 8:
+            queue_demo();
             break;
         case 9:
             return 0;
