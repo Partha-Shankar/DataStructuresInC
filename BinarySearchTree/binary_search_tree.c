@@ -1,43 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define the structure for the Binary Search Tree (BST)
 struct BST {
     int data;
     struct BST *left, *right;
 };
 typedef struct BST node;
 
-// Function to insert a node into the BST
 node *insert(node *root, int value) {
     node *newnode = (node *)malloc(sizeof(node));
     newnode->data = value;
     newnode->left = newnode->right = NULL;
 
     if (root == NULL) {
-        return newnode;  // If tree is empty, the new node becomes the root
+        return newnode;
     }
 
     node *current = root, *parent = NULL;
     while (current != NULL) {
         parent = current;
         if (value < current->data) {
-            current = current->left;  // Move to the left subtree
+            current = current->left;
         } else {
-            current = current->right;  // Move to the right subtree
+            current = current->right;
         }
     }
 
     if (value < parent->data) {
-        parent->left = newnode;  // Attach as the left child
+        parent->left = newnode;
     } else {
-        parent->right = newnode;  // Attach as the right child
+        parent->right = newnode;
     }
 
     return root;
 }
 
-// Main function
+// Inorder Traversal
+void inorder(node *root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d\t", root->data);
+        inorder(root->right);
+    }
+}
+
+// Preorder Traversal
+void preorder(node *root) {
+    if (root != NULL) {
+        printf("%d\t", root->data);
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+// Postorder Traversal
+void postorder(node *root) {
+    if (root != NULL) {
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d\t", root->data);
+    }
+}
+
 int main() {
     node *root = NULL;
     int value, n;
@@ -50,6 +74,12 @@ int main() {
         root = insert(root, value);
     }
 
-    printf("\nBST Created Successfully.\n");
+    printf("\nInorder traversal:\n");
+    inorder(root);
+    printf("\nPreorder traversal:\n");
+    preorder(root);
+    printf("\nPostorder traversal:\n");
+    postorder(root);
+
     return 0;
 }
