@@ -27,8 +27,31 @@ void display(NODE *head) {
     printf("\n");
 }
 
+// Function to concatenate two lists
+void concatenate(NODE *s1, NODE *s2) {
+    NODE *temp = s1;
+    while (temp->next != NULL)
+        temp = temp->next;
+    temp->next = s2;
+}
+
+// Function to sort the list
+void sort_list(NODE *head) {
+    NODE *current, *temp;
+    int t;
+    for (current = head; current != NULL; current = current->next) {
+        for (temp = current->next; temp != NULL; temp = temp->next) {
+            if (current->data > temp->data) {
+                t = current->data;
+                current->data = temp->data;
+                temp->data = t;
+            }
+        }
+    }
+}
+
 int main() {
-    NODE *s1 = NULL, *n1;
+    NODE *s1 = NULL, *s2 = NULL, *n1, *n2;
     int n, i;
 
     // Input for List 1
@@ -41,8 +64,24 @@ int main() {
         s1 = n1;
     }
 
-    // Display the list
-    printf("List 1 elements:\n");
+    // Input for List 2
+    printf("Number of elements in List 2: ");
+    scanf("%d", &n);
+    printf("Enter %d elements for List 2:\n", n);
+    for (i = 0; i < n; i++) {
+        n2 = getnode();
+        n2->next = s2;
+        s2 = n2;
+    }
+
+    // Concatenate and display
+    printf("Concatenated list:\n");
+    concatenate(s1, s2);
+    display(s1);
+
+    // Sort and display
+    printf("Sorted list:\n");
+    sort_list(s1);
     display(s1);
 
     return 0;
