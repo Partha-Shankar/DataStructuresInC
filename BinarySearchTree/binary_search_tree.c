@@ -35,7 +35,6 @@ node *insert(node *root, int value) {
     return root;
 }
 
-// Inorder Traversal
 void inorder(node *root) {
     if (root != NULL) {
         inorder(root->left);
@@ -44,7 +43,6 @@ void inorder(node *root) {
     }
 }
 
-// Preorder Traversal
 void preorder(node *root) {
     if (root != NULL) {
         printf("%d\t", root->data);
@@ -53,7 +51,6 @@ void preorder(node *root) {
     }
 }
 
-// Postorder Traversal
 void postorder(node *root) {
     if (root != NULL) {
         postorder(root->left);
@@ -62,9 +59,23 @@ void postorder(node *root) {
     }
 }
 
+// Search for a key in the BST
+node *search(node *root, int key) {
+    while (root != NULL) {
+        if (key == root->data) {
+            return root;
+        } else if (key < root->data) {
+            root = root->left;
+        } else {
+            root = root->right;
+        }
+    }
+    return NULL;
+}
+
 int main() {
     node *root = NULL;
-    int value, n;
+    int value, n, key;
 
     printf("Enter the number of elements: ");
     scanf("%d", &n);
@@ -80,6 +91,14 @@ int main() {
     preorder(root);
     printf("\nPostorder traversal:\n");
     postorder(root);
+
+    printf("\nEnter the key to search: ");
+    scanf("%d", &key);
+    if (search(root, key) != NULL) {
+        printf("\nKey found.\n");
+    } else {
+        printf("\nKey not found.\n");
+    }
 
     return 0;
 }
