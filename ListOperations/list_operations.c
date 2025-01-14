@@ -50,6 +50,18 @@ void sort_list(NODE *head) {
     }
 }
 
+// Function to reverse the list
+NODE *reverse(NODE *head) {
+    NODE *prev = NULL, *current = head, *next = NULL;
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    return prev;
+}
+
 int main() {
     NODE *s1 = NULL, *s2 = NULL, *n1, *n2;
     int n, i;
@@ -82,6 +94,11 @@ int main() {
     // Sort and display
     printf("Sorted list:\n");
     sort_list(s1);
+    display(s1);
+
+    // Reverse and display
+    printf("Reversed list:\n");
+    s1 = reverse(s1);
     display(s1);
 
     return 0;
